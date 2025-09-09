@@ -122,6 +122,9 @@ def update(id):
         flash('There was an issue updating your task.', 'danger')
         return redirect(url_for('index'))
 
+@app.route('mohamad2')
+def m():
+	return 'hello mohamad'
 
 if __name__ == "__main__":
     with app.app_context():
