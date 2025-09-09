@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش کار</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .container { max-width: 800px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">ویرایش کار</h1>
+
+                <form action="{{ url_for('edit', id=task.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">عنوان کار</label>
+                        <input type="text" name="content" id="content" class="form-control" value="{{ task.content }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="due_date" class="form-label">تاریخ سررسید</label>
+                        <input type="text" name="due_date" id="due_date" class="form-control jalali-datepicker" value="{{ task.due_date | to_jalali if task.due_date }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="priority" class="form-label">اولویت</label>
+                         <select name="priority" id="priority" class="form-select">
+                            <option value="1" {% if task.priority == 1 %}selected{% endif %}>زیاد</option>
+                            <option value="2" {% if task.priority == 2 %}selected{% endif %}>متوسط</option>
+                            <option value="3" {% if task.priority == 3 %}selected{% endif %}>کم</option>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary">انصراف</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".jalali-datepicker").pDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true
+            });
+        });
+    </script>
+</body>
+</html>
